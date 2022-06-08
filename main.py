@@ -126,8 +126,9 @@ class Personnage:
     def afficher_informations_personnage(self):
         print(">>> Voici les informations de votre personnage : <<<")
         print("Votre nom est " + self.nom)
-        print(f"Vous êtes un {self.classe} de niveau {self.niveau} avec {self.get_vie()} de vie")
-        print(f"Voici vos caractéristiques liées à votre classe : {self.caracs}")
+        print(f"Vous n'avez actuellement pas de classe, vous êtes de niveau {self.niveau} avec {self.get_vie()} points de vie")
+
+        # print(f"Voici vos caractéristiques liées à votre classe : {self.caracs}")
 
     def calcul_vie(self):
         return self.caracs["force"] * self.niveau * 10
@@ -145,15 +146,14 @@ class Personnage:
 class PersonnageJoueur(Personnage):
     NIVEAUX = [60, 120, 240, 480, 960]
 
-    def __init__(self, nom, classe):
+    def __init__(self, nom):
         self.niveau = 1
         self.experience = 1
         self.nom = nom
-        self.classe = classe
-        self.definition_caracteristiques_du_personnage()
+        # self.definition_caracteristiques_du_personnage()
         self.vie = self.calcul_vie()
         self.mes_sorts = []
-        self.sorts_disponnibles_pour_ma_classe()
+        # self.sorts_disponnibles_pour_ma_classe()
 
     def afficher_niveau_personnage(self):
         print(f"Votre niveau est de {self.niveau}")
@@ -164,30 +164,22 @@ class PersonnageJoueur(Personnage):
             if self.experience > self.NIVEAUX[i]:
                 self.niveau += 1
                 self.vie = self.calcul_vie()
-                if self.classe == "Guerrier":
-                    self.caracs["force"] += 2
-                    self.caracs["mana"] += 1
-                    self.caracs["dextérité"] += 1
-                elif self.classe == "Mage":
-                    self.caracs["force"] += 1
-                    self.caracs["mana"] += 2
-                    self.caracs["dextérité"] += 1
-                elif self.classe == "Voleur":
-                    self.caracs["force"] += 1
-                    self.caracs["mana"] += 1
-                    self.caracs["dextérité"] += 2
+                # if self.classe == "Guerrier":
+                #     self.caracs["force"] += 2
+                #     self.caracs["mana"] += 1
+                #     self.caracs["dextérité"] += 1
+                # elif self.classe == "Mage":
+                #     self.caracs["force"] += 1
+                #     self.caracs["mana"] += 2
+                #     self.caracs["dextérité"] += 1
+                # elif self.classe == "Voleur":
+                #     self.caracs["force"] += 1
+                #     self.caracs["mana"] += 1
+                #     self.caracs["dextérité"] += 2
 
                 print(f"Bravo vous venez de prendre un niveau, vous êtes maintenant niveau {self.get_niveau()}")
                 print(f"Vous avez maintenant {self.get_vie()} de vie")
                 print(f"Vos nouvelles caracteristiques : {self.caracs}")
-
-    def definition_caracteristiques_du_personnage(self):
-        if self.classe == "Guerrier":
-            self.caracs = {"force": 8, "mana": 1, "dextérité": 1}
-        elif self.classe == "Mage":
-            self.caracs = {"force": 1, "mana": 8, "dextérité": 1}
-        elif self.classe == "Voleur":
-            self.caracs = {"force": 2, "mana": 1, "dextérité": 7}
 
     def lancer_un_sort(self):
         print("Quel sort voulez-vous lancer ? ")
@@ -204,17 +196,16 @@ class PersonnageJoueur(Personnage):
         elif self.mes_sorts[choix_pour_sort_a_lancer]["Type"] == "Attaque":
             pass
 
-    def sorts_disponnibles_pour_ma_classe(self):
-        for i in range(len(sorts)):
-            # print(sorts[i])
-            if sorts[i]["Classe"] == self.classe:
-                self.mes_sorts.append(sorts[i])
+    # def sorts_disponnibles_pour_ma_classe(self):
+    #     for i in range(len(sorts)):
+    #         # print(sorts[i])
+    #         if sorts[i]["Classe"] == self.classe:
+    #             self.mes_sorts.append(sorts[i])
 
 
 class PersonnageNonJoueur(Personnage):
     def __init__(self, nom, niveau_min, niveau_max, classe, qualite=qualite_monstre[0]):
-        self.nom = nom
-        self.classe = classe
+        super().__init__(nom, classe)
         self.niveau_min = niveau_min
         self.niveau_max = niveau_max
         self.niveau = random.randint(niveau_min, niveau_max)
@@ -299,23 +290,34 @@ class Combat:
     def attaquer_avec_sort(self, attaquant: Personnage, defenseur: Personnage):
         self.sort_lance = attaquant.lancer_un_sort()
 
+class Quetes:
+    def __init__(self):
+        self.nom_de_la_quete = None
+        self.nom_du_pnj = None
+        self.description = None
+        self.objectifs = None
+        self.recompenses = None
+        self.
+
 
 def creation_personnage():
     nom = input("Quel est le nom de votre personnage ? ")
-    print("Merci de choisir votre classe parmis les classes suivantes :")
-    for i in range(len(classes)):
-        print(str(i) + ". " + classes[i] + " ")
-    classe_choisis = int(input("Votre classe ? "))
-    classe = classes[classe_choisis]
-    # Personnage(nom, classe)
-    if classe == 'Guerrier':
-        personnage = PersonnageJoueur(nom, "Guerrier")
-    elif classe == 'Mage':
-        personnage = PersonnageJoueur(nom, "Mage")
-    elif classe == "Voleur":
-        personnage = PersonnageJoueur(nom, "Voleur")
-    else:
-        print("ne rien faire")
+    # print("Merci de choisir votre classe parmis les classes suivantes :")
+    # for i in range(len(classes)):
+    #     print(str(i) + ". " + classes[i] + " ")
+    # classe_choisis = int(input("Votre classe ? "))
+    # classe = classes[classe_choisis]
+    # # Personnage(nom, classe)
+    # if classe == 'Guerrier':
+    #     personnage = PersonnageJoueur(nom, "Guerrier")
+    # elif classe == 'Mage':
+    #     personnage = PersonnageJoueur(nom, "Mage")
+    # elif classe == "Voleur":
+    #     personnage = PersonnageJoueur(nom, "Voleur")
+    # else:
+    #     print("ne rien faire")
+    personnage = PersonnageJoueur(nom)
+    print("Vous entrez dans le monde de RPG001")
 
     return personnage
 
