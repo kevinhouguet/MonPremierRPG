@@ -331,8 +331,8 @@ def creation_monstre():
     classe = classes[random.randint(0, len(classes) - 1)]
 
     monstre = PersonnageNonJoueur(nom, niveau_min, niveau_max, classe,
-                                  qualite_monstre[random.randint(0, len(qualite_monstre) - 1)])
-
+                                  # qualite_monstre[random.randint(0, len(qualite_monstre) - 1)])
+                                  qualite_monstre[0])
     return monstre
 
 
